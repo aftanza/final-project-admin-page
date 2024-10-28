@@ -66,11 +66,13 @@ function App() {
     return (
         <UserContext.Provider value={user}>
             <UserDispatchContext.Provider value={dispatch}>
-                {user.isLoggedIn ? (
+                {/* {user.isLoggedIn ? (
                     <RouterProvider router={loggedInRouter} />
                 ) : (
                     <RouterProvider router={notLoggedInRouter} />
-                )}
+                )} */}
+
+                <RouterProvider router={loggedInRouter} />
             </UserDispatchContext.Provider>
         </UserContext.Provider>
     );

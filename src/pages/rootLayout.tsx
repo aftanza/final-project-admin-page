@@ -1,20 +1,18 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "./global/sidebar";
 import Header from "./global/header";
+import { Toaster } from "@/components/ui/toaster";
 
 const RootLayout = () => {
     return (
-        <div className="">
-            <div className=" w-full static">
-                <Header />
-            </div>
-            <div className="flex">
-                <div className=" w-60 bg-red-800">
-                    <Sidebar />
-                </div>
-                <div className="flex-1">
+        <div className="flex flex-col min-h-screen bg-background text-foreground">
+            <Header className="w-full z-10 border-b border-border" />
+            <div className="flex flex-1 overflow-hidden">
+                <Sidebar className="w-60 flex-shrink-0 overflow-hidden" />
+                <main className="flex-1 overflow-y-auto p-6">
                     <Outlet />
-                </div>
+                    <Toaster />
+                </main>
             </div>
         </div>
     );
