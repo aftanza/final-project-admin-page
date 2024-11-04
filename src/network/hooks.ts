@@ -234,7 +234,7 @@ export async function removeListing(id: number) {
     });
     if (!res.ok) {
         throw new Error(
-            "Failed to remove listing. Server responded with an error."
+            "Failed to remove listing. Server responded with an error. The listing is probably in a cart"
         );
     }
     return res.ok;

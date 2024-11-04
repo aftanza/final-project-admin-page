@@ -225,7 +225,7 @@ app.post("/api/listing/remove", async (req, res) => {
     const { id } = req.body;
 
     let sqlQuery = `DELETE FROM listings WHERE id = ${id}`;
-    // console.log(sqlQuery);
+    console.log(sqlQuery);
     db.query(sqlQuery, (error, results) => {
         if (error) {
             res.status(500).json({ error: "Error removing teh lisitng" });

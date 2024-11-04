@@ -57,7 +57,7 @@ export default function Remove() {
         }
 
         toast({
-            title: "Item is being removed...",
+            title: "Item is being removed.... If it errors, the item is in a cart",
         });
 
         await removeListing(id);
