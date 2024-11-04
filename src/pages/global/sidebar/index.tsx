@@ -1,18 +1,25 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { FileText, RefreshCw, User } from "lucide-react";
+import {
+    CircleMinus,
+    CirclePlus,
+    PenLine,
+    RefreshCw,
+    User,
+} from "lucide-react";
 import { useUserDispatchContext } from "@/utils/contexts/user";
 import { Separator } from "@/components/ui/separator";
 
 const pages = [
-    { name: "Report", icon: FileText, path: "/report" },
+    { name: "Insert", icon: CirclePlus, path: "/insert" },
+    { name: "Remove", icon: CircleMinus, path: "/remove" },
+    { name: "Change", icon: PenLine, path: "/change" },
     { name: "Update", icon: RefreshCw, path: "/update" },
 ];
 
 export default function Sidebar({ ...props }) {
     const navigate = useNavigate();
     const dispatch = useUserDispatchContext();
-
     return (
         <div {...props}>
             <div className="flex flex-col w-60 border-solid bg-background border-r p-4 h-full">

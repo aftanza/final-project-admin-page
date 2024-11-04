@@ -5,11 +5,14 @@ import {
     RouterProvider,
 } from "react-router-dom";
 import { useUserReducer } from "./utils/store/hooks";
-import Home from "./pages/home";
+import Update from "./pages/update";
 import { UserContext, UserDispatchContext } from "./utils/contexts/user";
 import Login from "./pages/login";
 import { useEffect, useState } from "react";
 import RootLayout from "./pages/rootLayout";
+import Insert from "./pages/insert";
+import Change from "./pages/change";
+import Remove from "./pages/remove";
 
 // Routing using react-browser-router.
 const loggedInRouter = createBrowserRouter([
@@ -19,11 +22,23 @@ const loggedInRouter = createBrowserRouter([
         children: [
             {
                 index: true, //meaning that if it matches '/'
-                element: <Navigate to="/home" replace />,
+                element: <Navigate to="/update" replace />,
             },
             {
-                path: "/home",
-                element: <Home />,
+                path: "/update",
+                element: <Update />,
+            },
+            {
+                path: "/insert",
+                element: <Insert />,
+            },
+            {
+                path: "/change",
+                element: <Change />,
+            },
+            {
+                path: "/remove",
+                element: <Remove />,
             },
         ],
     },
@@ -66,13 +81,13 @@ function App() {
     return (
         <UserContext.Provider value={user}>
             <UserDispatchContext.Provider value={dispatch}>
-                {/* {user.isLoggedIn ? (
+                {user.isLoggedIn ? (
                     <RouterProvider router={loggedInRouter} />
                 ) : (
                     <RouterProvider router={notLoggedInRouter} />
-                )} */}
+                )}
 
-                <RouterProvider router={loggedInRouter} />
+                {/* <RouterProvider router={loggedInRouter} /> */}
             </UserDispatchContext.Provider>
         </UserContext.Provider>
     );
