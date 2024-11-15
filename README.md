@@ -1,50 +1,33 @@
-# React + TypeScript + Vite
+# Vite React TypeScript Tailwind Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Prerequisites
 
-Currently, two official plugins are available:
+-   [XAMPP](https://www.apachefriends.org/index.html) installed and running (as set up in the IE4727 project).
+-   [Node.js](https://nodejs.org/) installed on your machine.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Setup Instructions
 
-## Expanding the ESLint configuration
+### 1. Ensure XAMPP is Running
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. Follow the setup instructions in the [IE4727 Project](https://github.com/aftanza/ie4727-xampp) README to configure and start XAMPP.
+2. Ensure that both `Apache` and `MySQL` services are running.
 
-- Configure the top-level `parserOptions` property like this:
+### 2. Install Dependencies
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+1. Navigate to the project directory for this Vite React application.
+2. Run the following command to install the necessary dependencies:
+    ```bash
+    npm install
+    ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### 3. Start the Development Server
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. Start the development server by running:
+    ```bash
+    npm run dev
+    ```
+2. The development server will start, and you can view the application in your browser at (`http://localhost:8000/`).
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Additional Notes
+
+-   Make sure to keep XAMPP running in the background while working on this project.
