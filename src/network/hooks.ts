@@ -128,7 +128,8 @@ export async function getCustomerEmail(customer_id: number) {
 
 export async function sendCustomerUpdateEmail(
     customer_email: string,
-    order_status: PlacedOrdersOrderStatuses
+    order_status: PlacedOrdersOrderStatuses,
+    order_id: number
 ) {
     const res = await fetch(baseUrl + "/api/send_customer_update_email", {
         method: "POST",
@@ -138,8 +139,35 @@ export async function sendCustomerUpdateEmail(
         body: JSON.stringify({
             customer_email: customer_email,
             order_status: order_status,
+            order_id: order_id,
         }),
     });
+
+    if (!res.ok) {
+        throw new Error("Failed getting customer email.");
+    }
+    return res.ok;
+}
+
+export async function sendCustomerUpdateEmailMailersend(
+    customer_email: string,
+    order_status: PlacedOrdersOrderStatuses,
+    order_id: number
+) {
+    const res = await fetch(
+        baseUrl + "/api/send_customer_update_email_mailersend",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                customer_email: customer_email,
+                order_status: order_status,
+                order_id: order_id,
+            }),
+        }
+    );
 
     if (!res.ok) {
         throw new Error("Failed getting customer email.");

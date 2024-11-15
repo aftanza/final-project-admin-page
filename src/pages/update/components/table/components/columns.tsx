@@ -17,7 +17,7 @@ import {
     ChangeOrderStatusType,
     getCustomerEmail,
     PlacedOrdersOrderStatuses,
-    sendCustomerUpdateEmail,
+    sendCustomerUpdateEmailMailersend,
 } from "@/network/hooks";
 import { useUserContext } from "@/utils/contexts/user";
 
@@ -62,7 +62,12 @@ export const DataTableColumns: ColumnDef<ModifiedPlacedOrdersType>[] = [
 
                 const res = await getCustomerEmail(customer_id);
                 const customerEmail = res["email"];
-                sendCustomerUpdateEmail(customerEmail, next_order_status);
+                // sendCustomerUpdateEmail(customerEmail, next_order_status);
+                sendCustomerUpdateEmailMailersend(
+                    customerEmail,
+                    next_order_status,
+                    placed_order_id
+                );
 
                 window.location.reload();
             };

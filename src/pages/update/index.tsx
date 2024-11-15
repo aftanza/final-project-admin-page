@@ -41,13 +41,8 @@ const Update = () => {
 
     return (
         <div>
-            {/* <Input type="email" placeholder="Email" /> */}
             {isLoading && <>Loading...</>}
 
-            {/* {!isLoading &&
-                placedOrders?.map((placedOrder) => {
-                    return <>{JSON.stringify(placedOrder)}</>;
-                })} */}
             <div className="container mx-auto py-10">
                 {!isLoading && (
                     <DataTable

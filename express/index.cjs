@@ -134,32 +134,6 @@ app.post("/api/get_customer_email", (req, res) => {
     });
 });
 
-app.post("/api/send_customer_update_email", async (req, res) => {
-    const { customer_email, order_status } = req.body;
-    try {
-        // json to htmlquery thing
-        const body = qs.stringify({
-            customer_email: customer_email,
-            order_status: order_status,
-        });
-
-        const response = await axios.post(
-            "http://localhost:3000/_mail/mail.php",
-            body,
-            {
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-            }
-        );
-
-        res.status(200).send();
-    } catch (error) {
-        console.error("Error sending email:", error);
-        res.status(500).send("Failed to send email");
-    }
-});
-
 app.post("/api/listing/insert", async (req, res) => {
     const { name, description, price, category, img_url, brand, rating } =
         req.body;
@@ -233,6 +207,89 @@ app.post("/api/listing/remove", async (req, res) => {
             res.status(200).send();
         }
     });
+});
+
+// Email Part
+
+// Standard Email using PHP default
+app.post("/api/send_customer_update_email", async (req, res) => {
+    const { customer_email, order_status, order_id } = req.body;
+    try {
+        // json to htmlquery thing
+        const body = qs.stringify({
+            customer_email: customer_email,
+            order_status: order_status,
+        });
+
+        const response = await axios.post(
+            "http://localhost:3000/_mail/mail.php",
+            body,
+            {
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+            }
+        );
+
+        res.status(200).send();
+    } catch (error) {
+        console.error("Error sending email:", error);
+        res.status(500).send("Failed to send email");
+    }
+});
+
+// Using Mailersend
+
+const { MailerSend, Recipient, EmailParams, Sender } = require("mailersend");
+
+app.post("/api/send_customer_update_email_mailersend", async (req, res) => {
+    const { customer_email, order_status, order_id } = req.body;
+    try {
+        const mailersend = new MailerSend({
+            // shhhhh
+            apiKey: "mlsn.2effd08a0b6f5291cb4addcf36c5c22f2682eab25e2ad9d468b62bb3c489ecfe",
+        });
+
+        const recipients = [new Recipient(customer_email, "Customer")];
+
+        const sentFrom = new Sender(
+            "noreply@trial-3yxj6lj0qp54do2r.mlsender.net",
+            "IE4727 Project Automatic System"
+        );
+
+        const emailParams = new EmailParams()
+            .setFrom(sentFrom) // Sender email address
+            .setTo(recipients) // Recipient list
+            .setReplyTo(sentFrom)
+            .setSubject("Update on Your Order Status") // Email subject
+            .setHtml(`
+          <p>Dear Customer,</p>
+          <p>We are writing to update you on the status of your order of id <strong>${order_id}</strong>. Your order is currently: <strong>${order_status}</strong>.</p>
+          <p>Thank you for shopping with us!</p>
+          <p>Best Regards,<br>IE4727</p>
+        `) // HTML version of the email
+            .setText(`
+          Dear Customer,
+      
+          We are writing to update you on the status of your order of id ${order_id}.
+          Your order is currently: ${order_status}.
+      
+          Thank you for shopping with us!
+      
+          Best Regards,
+          IE4727
+        `); // Plain-text version of the email
+
+        const response = await mailersend.email.send(emailParams);
+
+        res.status(200).json({ message: "Email sent successfully", response });
+    } catch (error) {
+        console.error("Error sending email:", error);
+        res.status(500).json({
+            message: "Failed to send email",
+            error: error.message,
+        });
+    }
 });
 
 // Start the Express server
